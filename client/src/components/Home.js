@@ -72,7 +72,7 @@ function Home({ user, setUser, items, setItems }) {
 
   return (
     <div>
-      <h2>Items list</h2>
+      <h2>Items list!</h2>
       <div id="itemList">
         {items.map((item, index) => (
           <ul key={index}>
