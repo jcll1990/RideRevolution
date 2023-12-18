@@ -29,6 +29,7 @@ function Cart({ user, items, cart, setCart }) {
         // Handle the order data as needed
       })
       .catch(error => {
+        console.log("Que paso");
         console.error('Error creating order:', error);
         // Handle the error as needed
       });

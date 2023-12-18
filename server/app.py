@@ -4,9 +4,11 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request
 from flask_restful import Resource
 from datetime import datetime
+from sqlalchemy.exc import SQLAlchemyError
+from flask import jsonify
+
 
 from flask import Flask, request
 from flask_cors import CORS
@@ -227,7 +229,6 @@ def get_cart_items():
 
 ####### ORDERS
 
-from sqlalchemy.exc import SQLAlchemyError
 
 @app.route('/order', methods=['POST'])
 def create_order():
@@ -263,7 +264,15 @@ def create_order():
     # Create a new UserOrder record linking the user and the order
     user_order = UserOrder(user_id=user_id, order_id=new_order.id)
     db.session.add(user_order)
+
+    #empty cart
+    Cart.query.filter_by(user_id=user_id).delete()
+    db.session.commit()
+    db.session.rollback()
  
+    # return jsonify({'order': {'id': new_order.id, 'created_date': str(new_order.created_date), 'cost': new_order.cost, 'n_items': new_order.n_items}})
+
+
     # Create OrderItem instances for each item in the data array
     for item_data in data:
         item_id = item_data['item']['id']
@@ -271,6 +280,7 @@ def create_order():
 
         order_item = OrderItem(order_id=new_order.id, item_id=item_id, quantity=quantity)
         db.session.add(order_item)
+        
 
     try:
         db.session.commit()
