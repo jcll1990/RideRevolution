@@ -21,6 +21,7 @@ function App() {
   const [itemStock, setItemStock] = useState({});
   const [currentUser, setCurrentUser] = useState({})
   const [cart, setCart] = useState([]);
+  const [order, setOrder] = useState(0)
   
   useEffect(() => {
     fetch("/check_session").then((res) => {
@@ -46,13 +47,16 @@ function App() {
 
         <Route exact path="/">
             <Login
+            order = {order}
             setUser={setUser}
             user = {user}
+            setOrder = {setOrder}
             />
           </Route>
 
           <Route exact path="/home">
             <Home 
+              order={order}
               user ={user}
               setUser ={setUser}
               items={items}

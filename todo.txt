@@ -1,1 +1,15 @@
--tab name and icon
+LOGIN
+(DONE) -Crear una ordern al crear un usuario CON FLAG FALSE 
+(DONE) -hacer fetch a las ordenes al loggearse, y usar la ultima como useState Order 
+
+
+
+HOME
+-jalar order.id al meter algo al carro (home.js)
+
+
+CART (el nuevo orderitem)
+-Solo debe mostrarte los items del OrderItem del current user con la el ultimo order.id
+-Crear order ya no es un post, sino un patch (y al "crear una orden", lo que haces es camiar el flag a TRUE, y cambias el cart a la nueva orden).
+
+ORDERS..... piensa primero

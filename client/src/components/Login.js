@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //add verification of email for signup
 
-function Login({setUser, user}) {
+function Login({setUser, user, setOrder,order}) {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPass, setLoginPass] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -32,21 +32,36 @@ function Login({setUser, user}) {
         }
       })
       .then(data => {
-        // Handle the successful login response
         console.log(data.message);
   
-        // Set the user state with the received user data
         setUser(data.user);
+        getOrder(data.user.id)
       })
       .catch(error => {
-        // Handle errors, e.g., show an error message to the user.
         console.error(error.message);
-        // Display the error message to the user
       });
-  
   };
-  
 
+  function getOrder(a) {
+    fetch(`http://127.0.0.1:5555/getorder?user_id=${a}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const orderNumber = data.order_id;
+        setOrder(orderNumber);
+        console.log("Order Number:", orderNumber);
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
+        console.log("ERROR: Unable to fetch order data");
+      });
+  }
+  
+  
   
 
   const handleSignup = (e) => {
