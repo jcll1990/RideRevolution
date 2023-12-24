@@ -172,31 +172,23 @@ def add_to_cart():
     order = Order.query.get(order_id)
     item = Item.query.get(item_id)
 
-    if not order or not item:
-        return jsonify({'error': 'User or item not found'}), 404
 
-    # Check if there is enough stock
-    if item.stock >= quantity:
-        # Check if the item is already in the cart for the user
-        existing_cart_entry = OrderItem.query.filter_by(order_id=order_id, item_id=item_id).first()
+    # Check if the item is already in the cart for the user
+    existing_cart_entry = OrderItem.query.filter_by(order_id=order_id, item_id=item_id).first()
 
-        if existing_cart_entry:
-            # If the item is already in the cart, update the quantity
-            if existing_cart_entry.quantity + quantity <= item.stock:
-                existing_cart_entry.quantity += quantity
-            else:
-                return jsonify({'error': 'Not enough stock to add to cart'}), 400
-        else:
-            # Otherwise, create a new Cart entry
-            cart_entry = OrderItem(quantity=quantity, order=order, item=item)
-            db.session.add(cart_entry)
+    if existing_cart_entry:
+        existing_cart_entry.quantity += quantity
 
-        # Commit changes to the cart
-        db.session.commit()
-
-        return jsonify({'message': 'Item added to the cart successfully'}), 200
     else:
-        return jsonify({'error': 'Not enough stock'}), 400
+        # Otherwise, create a new Cart entry
+        cart_entry = OrderItem(quantity=quantity, order=order, item=item)
+        db.session.add(cart_entry)
+
+    db.session.commit()
+
+    return jsonify({'message': 'Item added to the cart successfully'}), 200
+
+
 
 #### CART STUFF
 
