@@ -27,7 +27,7 @@ db = SQLAlchemy(metadata=metadata)
 class User(db.Model, SerializerMixin):
     __tablename__ = "user"
 
-    serialize_rules = ('-user_order.user', '-cart.user')
+    serialize_rules = ('-order.user',)
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String, nullable=False, unique=True) 
@@ -35,10 +35,8 @@ class User(db.Model, SerializerMixin):
     
     _password_hash = db.Column(db.String)
 
-    user_order = db.relationship('UserOrder', back_populates='user')
-    cart = db.relationship('Cart', back_populates='user')
-
-
+    order = db.relationship('Order', back_populates='user')
+    
     def __repr__(self):
         return f'<User {self.id}>'
 
@@ -76,53 +74,23 @@ class User(db.Model, SerializerMixin):
     #######end#######
 
 
-class Cart(db.Model, SerializerMixin):
-    __tablename__ = 'cart'
-
-    serialize_rules = ('-user.cart','-item.cart')
-    id = db.Column(db.Integer, primary_key=True)
-    quantity =db.Column(db.Integer)
-
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
-
-    item = db.relationship('Item', back_populates = 'cart')
-    user = db.relationship('User', back_populates = 'cart')
-
-        
-    def __repr__(self):
-        return f'<Cart {self.id}>'
-
-
-class UserOrder(db.Model, SerializerMixin):
-    __tablename__ = 'user_order'
-
-    serialize_rules = ('-user.user_order','-order.user_order')
-    id = db.Column(db.Integer, primary_key=True)
-
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    order = db.relationship('Order', back_populates = 'user_order')
-    user = db.relationship('User', back_populates = 'user_order')
-
-        
-    def __repr__(self):
-        return f'<UserOrder {self.id}>'
 
 
 class Order(db.Model, SerializerMixin):
     __tablename__ = "order"
 
     
-    serialize_rules = ('-user_order.order', '-order_item.order')
+    serialize_rules = ('-user.order', '-order_item.order')
 
     id = db.Column(db.Integer, primary_key=True)
     created_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     cost = db.Column(db.Integer)
     n_items = db.Column(db.Integer)
+    created = db.Column(db.Boolean)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
 
-    user_order = db.relationship('UserOrder', back_populates='order')
+
+    user = db.relationship('User', back_populates='order')
     order_item = db.relationship('OrderItem', back_populates='order')
     def __repr__(self):
         return f'<Order{self.id}>'
@@ -146,13 +114,10 @@ class OrderItem(db.Model, SerializerMixin):
     def __repr__(self):
         return f'<OrderItem {self.id}>'
 
-
-
-
 class Item(db.Model, SerializerMixin):
     __tablename__ = "item"
 
-    serialize_rules = ('-order_item.item','-cart.item')
+    serialize_rules = ('-order_item.item',)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False, unique=True)
@@ -163,11 +128,9 @@ class Item(db.Model, SerializerMixin):
     brand = db.Column(db.String)  
 
     order_item = db.relationship('OrderItem', back_populates='item')
-    cart = db.relationship('Cart', back_populates='item')
 
     def __repr__(self):
         return f'<Item {self.id}>'
-
 
     #######start#######
     @validates('name')
@@ -182,6 +145,4 @@ class Item(db.Model, SerializerMixin):
         if price is not None and not isinstance(price, (float, int)) or price <= 0:
             raise ValueError("Price must be a positive number.")
         return price
-        
-
     #######end#######

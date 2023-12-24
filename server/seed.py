@@ -1,38 +1,17 @@
-#!/usr/bin/env python3
-
-# Standard library imports
-from random import randint, choice as rc
-
-# Remote library imports
-from faker import Faker
-from random import choice 
-
 
 # Local imports
 from app import app, db  # Import the 'db' object from the 'app' module
-from models import User, Order, Item, UserOrder, OrderItem, Cart
+from models import User, Order, Item, OrderItem
 
 if __name__ == '__main__':
-    fake = Faker()
+    
     with app.app_context():
         print("Starting seed...")
-        # Seed code goes here!
 
         User.query.delete()
         Item.query.delete()
         Order.query.delete()
-        UserOrder.query.delete()
         OrderItem.query.delete()
-        Cart.query.delete()
-
-
-
-        # Create and add users to the database
-        user1 = User(email="user1@example.com", password="password1")
-        user2 = User(email="user2@example.com", password="password2")
-
-        db.session.add(user1)
-        db.session.add(user2)
 
         item1 = Item(name="Engine Rebuild Kit", price=1049.36, image_url="https://www.revzilla.com/product_images/0287/4651/wrench_rabbit_engine_rebuild_kit_honda_cr80_r19901991_750x750.jpg", stock=50, category="Engine Parts", brand="Vertex")
         item2 = Item(name="800cc Cam Kit", price=1334.99, image_url="https://www.revzilla.com/product_images/0248/4024/ss_hooligan_big_bore_cam_kit_for_harley_sportster_black_750x750.jpg", stock=60, category="Engine Parts", brand="Screaming Eagle")
@@ -54,15 +33,7 @@ if __name__ == '__main__':
         item18 = Item(name="Shorty Exhaust", price=950.99, image_url="https://www.revzilla.com/product_images/1019/4316/two_brothers_bagger2_into1_shorty_exhaust_for_harley_touring20092016_stainless_750x750.jpg", stock=60, category="Exhaust Systems", brand="Two Brothers")
         item19 = Item(name="Slip-On Muffler", price=450.99, image_url="https://www.revzilla.com/product_images/0399/3627/ss_grand_national_slip_on_muffler_for_harley_750x750.jpg", stock=70, category="Exhaust Systems", brand="S&S Cycle")
         item20 = Item(name="Slip-On Exhausts", price=510.99, image_url="https://www.revzilla.com/product_images/0893/1126/akrapovic_slip_on_exhausts_750x750.jpg", stock=50, category="Exhaust Systems", brand="Akrapovic")
-        
-
-        
-
-
-  
-        db.session.add(user1)
-        db.session.add(user2)
-
+    
         db.session.add(item1)
         db.session.add(item2)
         db.session.add(item3)
@@ -86,3 +57,4 @@ if __name__ == '__main__':
 
 
         db.session.commit()
+        print("Done papu")
