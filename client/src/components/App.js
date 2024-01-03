@@ -38,8 +38,18 @@ function App() {
     .then((data) => setItems(data));
     }, [user, cart]);
 
+
+  function test() {
+    console.log(order)
+  }
+
   return (
     <div>
+
+      <button id="createOrderbutton" onClick={() => test()}>
+      {"TEST"}
+       </button>
+
       <Header />
       <main>
 

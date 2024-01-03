@@ -54,11 +54,14 @@ def index():
 def signup():
     data = request.get_json()
     
+    existing_user = User.query.filter_by(email=data['email']).first()
+    if existing_user:
+        return jsonify({'error': 'Email is already in use. Please choose another.'}), 400
+    
     new_user = User(email=data['email'])
     new_user.password_hash = data['password']
     
     db.session.add(new_user)
-    
     db.session.commit()
 
     user_id = new_user.id
@@ -66,13 +69,11 @@ def signup():
     first_order = Order(user_id=user_id, created=False)
     
     db.session.add(first_order)
-    
     db.session.commit()
 
     return {'message': 'Registration Successful!'}, 201
 
 
-from flask import jsonify
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -101,18 +102,20 @@ def login():
 @app.route('/getorder', methods=['GET'])
 def get_last_order():
     user_id = request.args.get('user_id')  
-    print(f"Received user ID: {user_id}")
 
-    # Explicitly declare the 'id' column using column('id')
-    latest_order_id = Order.query.filter_by(user_id=user_id).order_by(column('id').desc()).with_entities(Order.id).scalar()
+    latest_order = (
+        Order.query
+        .filter_by(user_id=user_id)
+        .order_by(column('id').desc())
+        .first() 
+    )
 
-    print(f"Order ID: {latest_order_id}")
-
-    if latest_order_id:
-        # Return the latest order ID in the response
-        return jsonify({'order_id': int(latest_order_id)}), 200
+    if latest_order:
+        return jsonify({'order_id': int(latest_order.id)}), 200
     else:
         return jsonify({'error': 'No orders found for the specified user.'}), 404
+
+
 
 
 
@@ -229,94 +232,83 @@ def remove_from_cart():
         return jsonify({'error': 'Invalid request'}), 400
 
 
+
 @app.route('/cart', methods=['GET'])
 def get_cart_items():
-
     order_id = request.args.get('order')
 
-    #find the order, then check if it still in the cart, if it is shown all, if not, retunr nothing
+    # Find the order
     last_order = Order.query.filter(Order.id == order_id).first()
 
+    # Check if the order exists
+    if last_order is None:
+        return jsonify({'error': 'Order not found'}), 404
+
+    # Check if the order is still in the cart
     if last_order.created == True:
         return jsonify({}), 200
     elif last_order.created == False:
+        # Get cart items
         cart_items = OrderItem.query.filter(Order.id == order_id).all()
 
-    # Serialize the items
-    serialized_items = [item.to_dict() for item in cart_items]
+        # Check if the order has a valid 'created' value
+        if last_order.created is not None:
+            serialized_items = [item.to_dict() for item in cart_items]
+            return jsonify({'cart_items': serialized_items}), 200
+        else:
+            return jsonify({'error': 'Invalid value for "created" in the order'}), 400
 
-    return jsonify({'cart_items': serialized_items}), 200
 
 
 # ####### ORDERS
 
 
-# @app.route('/order', methods=['POST'])
-# def create_order():
-#     data = request.get_json()
+@app.route('/order', methods=['PATCH'])
+def update_order():
+    order_id = request.args.get('order')
 
-#     def calculate_total_cost(data):      
-#         total_cost = 0
-#         for item_data in data:
-#             price = item_data['item']['price']
-#             quantity = item_data['quantity']
-#             total_cost += price * quantity
-#         return  total_cost
+    data = OrderItem.query.filter(Order.id == order_id).all()
 
-#     def calculate_total_items(data):      
-#         total_items = 0
-#         for item_data in data:
-#             quantity = item_data['quantity']
-#             total_items +=quantity
-#         return  total_items
+    def calculate_total_cost(data):
+        total_cost = 0
 
-#     current_datetime = datetime.now()
-#     total_cost = calculate_total_cost(data)
-#     total_items = calculate_total_items(data)
+        for item in data:
+            item_id = item.id  # Assuming 'id' is the primary key of the OrderItem model
+            item_price = Item.query.filter(OrderItem.id == item_id).first().price
+            total_cost += item.quantity * item_price
 
-#     # Create a new order
-#     new_order = Order(created_date=current_datetime, cost=total_cost, n_items=total_items)
-#     db.session.add(new_order)
-#     db.session.commit()
+        return total_cost
 
-#     # Extract user ID from the first item in the data array
-#     user_id = data[0]['user']['id']
+    def calculate_total_items(data):
+        return sum(item.quantity for item in data)
 
-#     # Create a new UserOrder record linking the user and the order
-#     user_order = UserOrder(user_id=user_id, order_id=new_order.id)
-#     db.session.add(user_order)
+    current_datetime = datetime.now()
+    total_cost = calculate_total_cost(data)
+    total_items = calculate_total_items(data)
 
-#     #empty cart
-#     Cart.query.filter_by(user_id=user_id).delete()
-#     db.session.commit()
-#     db.session.rollback()
- 
-#     # return jsonify({'order': {'id': new_order.id, 'created_date': str(new_order.created_date), 'cost': new_order.cost, 'n_items': new_order.n_items}})
+    # Assuming you want to update an existing order
+    existing_order = Order.query.get(order_id)
+    user_id = existing_order.user_id
+    if existing_order:
+        existing_order.created_date = current_datetime
+        existing_order.cost = total_cost
+        existing_order.n_items = total_items
+        existing_order.created = True
+        db.session.commit()
 
-
-#     # # Create OrderItem instances for each item in the data array
-#     # for item_data in data:
-#     #     item_id = item_data['item']['id']
-#     #     quantity = item_data['quantity']
-
-#     #     order_item = OrderItem(order_id=new_order.id, item_id=item_id, quantity=quantity)
-#     #     db.session.add(order_item)
+        next_order = Order(user_id=user_id, created=False)
         
+        db.session.add(next_order)
+        
+        db.session.commit()
 
-#     # try:
-#     #     db.session.commit()
+        return jsonify({"message": "Order updated successfully"}), 200
+    else:
+        return jsonify({"error": "Order not found"}), 404
 
-#     #     # Delete cart items for the user
-#     #     Cart.query.filter_by(user_id=user_id).delete()
-#     #     db.session.commit()
 
-#     #     # Use the to_dict method for the response
-#     #     return jsonify({"message": "Order created successfully", "order": new_order.to_dict()}), 201
 
-#     # except SQLAlchemyError as e:
-#     #     # Handle any database errors
-#     #     db.session.rollback()
-#     #     return jsonify({"error": "Failed to create order", "details": str(e)}), 500
+
 
 
 

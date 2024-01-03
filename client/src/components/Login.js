@@ -15,6 +15,9 @@ function Login({setUser, user, setOrder,order}) {
       password: loginPass,
     };
   
+    setLoginEmail('');
+    setLoginPass('');
+  
     fetch('http://127.0.0.1:5555/login', {
       method: 'POST',
       headers: {
@@ -32,15 +35,16 @@ function Login({setUser, user, setOrder,order}) {
         }
       })
       .then(data => {
-        console.log(data.message);
-  
         setUser(data.user);
-        getOrder(data.user.id)
+        getOrder(data.user.id);
+        alert(data.message); // Display success message
       })
       .catch(error => {
+        alert(error.message); // Display error message
         console.error(error.message);
       });
   };
+  
 
   function getOrder(a) {
     fetch(`http://127.0.0.1:5555/getorder?user_id=${a}`)
@@ -53,7 +57,6 @@ function Login({setUser, user, setOrder,order}) {
       .then((data) => {
         const orderNumber = data.order_id;
         setOrder(orderNumber);
-        console.log("Order Number:", orderNumber);
       })
       .catch((error) => {
         console.error('Fetch error:', error);
@@ -66,13 +69,15 @@ function Login({setUser, user, setOrder,order}) {
 
   const handleSignup = (e) => {
     e.preventDefault();
+  
     const data = {
       email: newEmail,
       password: newPass,
-
     };
-
-    
+  
+    setNewEmail('');
+    setNewPass('');
+  
     fetch('http://127.0.0.1:5555/signup', {
       method: 'POST',
       headers: {
@@ -84,20 +89,22 @@ function Login({setUser, user, setOrder,order}) {
         if (response.status === 201) {
           return response.json();
         } else {
-          return response.json().then(data => {
+          return response.json()
+            .then(data => {
             throw new Error(data.error);
           });
         }
       })
       .then(data => {
-        console.log(data.message);
-        // Reset the form after successful signup
-      
+        alert(data.message);
       })
       .catch(error => {
+        alert(error.message);
         console.error(error.message);
       });
   };
+  
+  
   
 
   return (
