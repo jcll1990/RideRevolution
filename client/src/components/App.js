@@ -75,6 +75,8 @@ function App() {
               setItems = {setItems}
               cart = {cart}
               setCart = {setCart}
+              setOrder = {setOrder}
+              order = {order}
 
              />
           </Route>

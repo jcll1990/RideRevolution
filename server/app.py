@@ -232,10 +232,15 @@ def remove_from_cart():
 @app.route('/cart', methods=['GET'])
 def get_cart_items():
 
-    user_id = request.args.get('user_id')
+    order_id = request.args.get('order')
 
-    # Fetch all items in the cart that have the specified user_id
-    cart_items = OrderItem.query.filter_by(user_id=user_id).all()
+    #find the order, then check if it still in the cart, if it is shown all, if not, retunr nothing
+    last_order = Order.query.filter(Order.id == order_id).first()
+
+    if last_order.created == True:
+        return jsonify({}), 200
+    elif last_order.created == False:
+        cart_items = OrderItem.query.filter(Order.id == order_id).all()
 
     # Serialize the items
     serialized_items = [item.to_dict() for item in cart_items]
