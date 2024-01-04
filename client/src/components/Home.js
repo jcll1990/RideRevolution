@@ -76,7 +76,7 @@ function Home({ user, setUser, items, setItems, order }) {
             <li>{item.name}</li>
             <li>Brand: {item.brand}</li>
             <li>Category: {item.category}</li>
-            <li>Price: ${item.price}</li>
+            <li>Price: ${item.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</li>
             <li>Stock: {item.stock} units</li>
             {item.stock > 0 ? (
               <form onSubmit={(event) => addToCart(event, item)}>

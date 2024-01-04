@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function Order({ user,items }) {
+
+
   const [selOrder, setSelOrder] = useState({});
-  const [userOrders, setUserOrders]= useState([]);
-  const [userOrderID, setUserOrdersID]= useState([]);
+
   const [orders, setOrders] =useState([])
   const [itemsInOrder, setItemsInOrder] = useState([])
  
@@ -12,56 +13,24 @@ function Order({ user,items }) {
 
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5555/user_order?user_id=${user.id}`)
+    fetch(`http://127.0.0.1:5555/get_orders?user_id=${user.id}`)
       .then((response) => response.json())
       .then((data) => {
-        // Access the 'orders' property
-        const ordersData = data.orders || [];
-  
-        setUserOrdersID(ordersData.map((order) => order.order_id));
-        setUserOrders(ordersData);
+        setOrders(data);
       })
       .catch((error) => console.error("Error fetching orders:", error));
   }, []);
-
-
   
-  
-
-  function getorders() {
-    const tempOrder = [];
-  
-    // Create an array of promises for each fetch request
-    const fetchPromises = userOrderID.map((i) =>
-      fetch(`http://127.0.0.1:5555/order/${i}`)
-        .then((response) => response.json())
-        .then((data) => {
-          // Handle the data for each order as needed
-          tempOrder.push(data);
-        })
-        .catch((error) => console.error(`Error fetching order ${i}:`, error))
-    );
-  
-    // Use Promise.all to wait for all fetch requests to complete
-    Promise.all(fetchPromises)
-      .then(() => {
-        // Once all fetch requests are complete, update the state
-        setOrders(tempOrder);
-      });
-  }
-  
-  
-  
-
+   
   function handleOrderClick(order) {
     setSelOrder(order);
-    console.log(order);
+
     getItemsID(order);
-  
+
 
   }
   
-  
+
   function getItemsID(order) {
  
     for (let i = 0; i < order.order_item.length; i++) {
@@ -69,7 +38,7 @@ function Order({ user,items }) {
       tempArray.push(itemId);
     }
     setItemsInOrder(tempArray);
-    console.log(tempArray)
+
   }
 
 
@@ -82,10 +51,6 @@ function Order({ user,items }) {
 
   return (
     <div>
-
-      <button id="getorders" onClick={() => getorders()}>
-        My orders
-      </button>
   
       <div id="OrderList">
         {orders.length > 0 ? (
@@ -94,7 +59,9 @@ function Order({ user,items }) {
               <li>Order ID: {order.id}</li>
               <li>Date Created: {order.created_date}</li>
               <li>Number of items: {order.n_items}</li>
-              <li>Order price: {order.cost}</li>
+              <li>Order price: $ {order.cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</li>
+
+
             </ul>
           ))
         ) : (
@@ -110,7 +77,7 @@ function Order({ user,items }) {
               <li>Order ID: {selOrder.id}</li>
               <li>Date Created: {selOrder.created_date}</li>
               <li>Number of items: {selOrder.n_items}</li>
-              <li>Order price: {selOrder.cost}</li>
+              <li>Order price: $ {selOrder.cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</li>
             </ul>
             <h3>Items in the order:</h3>
             {itemsInOrder.map((itemID) => {

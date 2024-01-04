@@ -40,7 +40,7 @@ function App() {
 
 
   function test() {
-    console.log(order)
+    console.log(user)
   }
 
   return (

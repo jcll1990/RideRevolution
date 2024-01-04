@@ -4,12 +4,10 @@ function Cart({ user, items, cart, setCart, setOrder, order }) {
   const [quantityToRemove, setQuantityToRemove] = useState(1);
 
   useEffect(() => {
-    console.log(order);
     fetch(`http://127.0.0.1:5555/cart?order=${order}`)
       .then((response) => response.json())
       .then((data) => {
         setCart(data.cart_items);
-        console.log(data);
       })
       .catch((error) => console.error("Error fetching cart items:", error));
   }, []);
