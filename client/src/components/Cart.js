@@ -3,6 +3,18 @@ import { useState, useEffect } from "react";
 function Cart({ user, items, cart, setCart, setOrder, order }) {
   const [quantityToRemove, setQuantityToRemove] = useState(1);
 
+  useEffect(() => {
+    console.log(order);
+    fetch(`http://127.0.0.1:5555/cart?order=${order}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setCart(data.cart_items);
+        console.log(data);
+      })
+      .catch((error) => console.error("Error fetching cart items:", error));
+  }, []);
+
+
   function createOrder(cart, user) {
     if (cart && user.id >= 1) {
       console.log(cart);
@@ -25,12 +37,10 @@ function Cart({ user, items, cart, setCart, setOrder, order }) {
         })
         .then((data) => {
           console.log("Order created successfully:", data.order);
-          // Handle the order data as needed
         })
         .catch((error) => {
           console.log("Qué pasó");
           console.error("Error creating the order:", error);
-          // Handle the error as needed
         });
     }
   }
@@ -61,48 +71,36 @@ function Cart({ user, items, cart, setCart, setOrder, order }) {
     alert("Order created");
   }
 
-  useEffect(() => {
-    console.log(order);
-    fetch(`http://127.0.0.1:5555/cart?order=${order}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setCart(data.cart_items);
-        console.log(data);
-      })
-      .catch((error) => console.error("Error fetching cart items:", error));
-  }, []);
 
-  const removeFromCart = async (event, cartItem) => {
+
+  const removeFromCart = async (event, cartItem, order) => {
     event.preventDefault();
 
-    // Remove the quantity from the cart
-    const response = await fetch(`http://127.0.0.1:5555/remove_from_cart`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: user.id,
-        item_id: cartItem.item_id,
-        quantity: quantityToRemove,
-      }),
-    });
+    fetch(`http://127.0.0.1:5555/remove_from_cart`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            order_id: order,
+            item_id: cartItem.item_id,
+            quantity: quantityToRemove,
+        }),
+    })
+    .then((response) => response.json())
+    .then(() => {
+        fetch(`http://127.0.0.1:5555/cart?order=${order}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setCart(data.cart_items);
 
-    if (response.ok) {
-      // Fetch updated cart items after removing from the cart
-      const updatedResponse = await fetch(
-        `http://127.0.0.1:5555/cart?user_id=${user.id}`
-      );
-      if (updatedResponse.ok) {
-        const updatedData = await updatedResponse.json();
-        setCart(updatedData.cart_items);
-      } else {
-        console.error("Failed to fetch updated cart items");
-      }
-    } else {
-      console.error("Failed to remove from the cart");
-    }
+            })
+            .catch((error) => console.error("Error fetching cart items:", error));
+    });
   };
+
+
+
 
   const handleQuantityChange = (event) => {
     setQuantityToRemove(parseInt(event.target.value, 10));
@@ -126,7 +124,7 @@ function Cart({ user, items, cart, setCart, setOrder, order }) {
                   <p>{cartItem.item.brand}</p>
                   <p>Price: ${cartItem.item.price}</p>
                   <p>Quantity: {cartItem.quantity}</p>
-                  <form onSubmit={(event) => removeFromCart(event, cartItem)}>
+                  <form onSubmit={(event) => removeFromCart(event, cartItem, order)}>
                     <label htmlFor="quantityToRemove">Remove Quantity:</label>
                     <select
                       id="quantityToRemove"

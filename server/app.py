@@ -136,7 +136,6 @@ def logout():
     session.pop('user_id')
 
     return {'message': 'Successfully logged out.'}, 200
-#######end#######
 
 
 @app.route('/items', methods=['GET'])
@@ -160,7 +159,6 @@ def item_to_cart(item_id):
         return jsonify({'error': 'Item not found'}), 404
     
 
-#### HOME STUFF
 
 
 @app.route('/add_to_cart', methods=['POST'])
@@ -171,19 +169,16 @@ def add_to_cart():
     item_id = data.get('item_id')
     quantity = data.get('quantity')
 
-    # Check if order and item exist
     order = Order.query.get(order_id)
     item = Item.query.get(item_id)
 
 
-    # Check if the item is already in the cart for the user
     existing_cart_entry = OrderItem.query.filter_by(order_id=order_id, item_id=item_id).first()
 
     if existing_cart_entry:
         existing_cart_entry.quantity += quantity
 
     else:
-        # Otherwise, create a new Cart entry
         cart_entry = OrderItem(quantity=quantity, order=order, item=item)
         db.session.add(cart_entry)
 
@@ -193,43 +188,38 @@ def add_to_cart():
 
 
 
-#### CART STUFF
 
 
 @app.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
     data = request.get_json()
 
-    user_id = data.get('user_id')
+    order_id = data.get('order_id')
     item_id = data.get('item_id')
     quantity_to_remove = data.get('quantity')
-
-    # Check if user and item exist
-    user = User.query.get(user_id)
     item = Item.query.get(item_id)
 
-    if not user or not item:
-        return jsonify({'error': 'User or item not found'}), 404
+    cart_entry = OrderItem.query.filter_by(order_id=order_id, item_id=item_id).first()
 
-    # Check if the item is in the cart for the user
-    cart_entry = OrderItem.query.filter_by(user_id=user_id, item_id=item_id).first()
 
-    if cart_entry and cart_entry.quantity >= quantity_to_remove:
-        # Add the selected quantity back to the stock of the original item
-        item.stock += quantity_to_remove
-
-        # Reduce the selected quantity for the item in the cart
+    if cart_entry and cart_entry.quantity - quantity_to_remove >= 1:
         cart_entry.quantity -= quantity_to_remove
+        message = 'Quantity removed from cart'
 
-        # Delete the row if the quantity becomes zero
-        if cart_entry.quantity == 0:
-            db.session.delete(cart_entry)
+    elif cart_entry and cart_entry.quantity - quantity_to_remove <= 0:
+        db.session.delete(cart_entry)
+        message = 'Item removed from cart'
 
-        db.session.commit()
-
-        return jsonify({'message': 'Item removed from cart successfully'}), 200
     else:
-        return jsonify({'error': 'Invalid request'}), 400
+        return jsonify({'error': 'Invalid request or insufficient quantity in cart'}), 400
+
+    new_stock = item.stock + quantity_to_remove
+    item.stock = new_stock
+    db.session.commit()
+
+    return jsonify({'message': f'{message} and stock updated successfully'}), 200
+
+
 
 
 
@@ -237,26 +227,11 @@ def remove_from_cart():
 def get_cart_items():
     order_id = request.args.get('order')
 
-    # Find the order
-    last_order = Order.query.filter(Order.id == order_id).first()
+    cart_items = OrderItem.query.filter(OrderItem.order_id == order_id).all()
 
-    # Check if the order exists
-    if last_order is None:
-        return jsonify({'error': 'Order not found'}), 404
+    serialized_items = [item.to_dict() for item in cart_items]
+    return jsonify({'cart_items': serialized_items}), 200
 
-    # Check if the order is still in the cart
-    if last_order.created == True:
-        return jsonify({}), 200
-    elif last_order.created == False:
-        # Get cart items
-        cart_items = OrderItem.query.filter(Order.id == order_id).all()
-
-        # Check if the order has a valid 'created' value
-        if last_order.created is not None:
-            serialized_items = [item.to_dict() for item in cart_items]
-            return jsonify({'cart_items': serialized_items}), 200
-        else:
-            return jsonify({'error': 'Invalid value for "created" in the order'}), 400
 
 
 
@@ -273,7 +248,7 @@ def update_order():
         total_cost = 0
 
         for item in data:
-            item_id = item.id  # Assuming 'id' is the primary key of the OrderItem model
+            item_id = item.id  
             item_price = Item.query.filter(OrderItem.id == item_id).first().price
             total_cost += item.quantity * item_price
 
@@ -286,7 +261,6 @@ def update_order():
     total_cost = calculate_total_cost(data)
     total_items = calculate_total_items(data)
 
-    # Assuming you want to update an existing order
     existing_order = Order.query.get(order_id)
     user_id = existing_order.user_id
     if existing_order:

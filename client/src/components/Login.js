@@ -70,6 +70,13 @@ function Login({setUser, user, setOrder,order}) {
   const handleSignup = (e) => {
     e.preventDefault();
   
+    // //Password validation
+    // const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+    // if (!passwordRegex.test(newPass)) {
+    //   alert("Password must contain at least 8 characters, 1 uppercase letter, and 1 special character.");
+    //   return;
+    // }
+  
     const data = {
       email: newEmail,
       password: newPass,
@@ -85,24 +92,25 @@ function Login({setUser, user, setOrder,order}) {
       },
       body: JSON.stringify(data),
     })
-      .then(response => {
-        if (response.status === 201) {
-          return response.json();
-        } else {
-          return response.json()
-            .then(data => {
+    .then(response => {
+      if (response.status === 201) {
+        return response.json();
+      } else {
+        return response.json()
+          .then(data => {
             throw new Error(data.error);
           });
-        }
-      })
-      .then(data => {
-        alert(data.message);
-      })
-      .catch(error => {
-        alert(error.message);
-        console.error(error.message);
-      });
+      }
+    })
+    .then(data => {
+      alert(data.message);
+    })
+    .catch(error => {
+      alert(error.message);
+      console.error(error.message);
+    });
   };
+  
   
   
   
