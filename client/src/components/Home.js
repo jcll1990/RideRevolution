@@ -1,7 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-function Home({ user, setUser, items, setItems, order }) {
+function Home({ user, setUser, items, setItems, order,filter, setFilter }) {
+
+  useEffect(() => {
+    setFilter('')
+}, []);
+
+  function handleFilterChange(event) {
+    setFilter(event.target.value)
+  }
+
+
 
   function addToCart(event, item) {
     event.preventDefault();
@@ -68,6 +78,13 @@ function Home({ user, setUser, items, setItems, order }) {
 
   return (
     <div>
+      <div>
+        <input
+        type="text"
+        placeholder="Filter items by name..."
+        onChange={handleFilterChange}
+      />
+      </div>
       <h2>Items list!</h2>
       <div id="itemList">
         {items.map((item, index) => (

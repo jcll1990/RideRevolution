@@ -18,6 +18,7 @@ function App() {
   const [user, setUser] = useState  ({});
 
   const [items, setItems] = useState([]);
+  const [filter, setFilter] = useState('');
   const [itemStock, setItemStock] = useState({});
   const [currentUser, setCurrentUser] = useState({})
   const [cart, setCart] = useState([]);
@@ -29,26 +30,30 @@ function App() {
             res.json().then((user) => setCurrentUser(user));
         }
     });
-}, []);
-
+  }, []);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/items")
     .then((r) => r.json())
     .then((data) => setItems(data));
-    }, [user, cart]);
+  }, []);
 
+  const filteredItems = items.filter(item => {
+    const itemName = item.name.toLowerCase();
+    const brand = item.brand.toLowerCase();
+    const category = item.category.toLowerCase();
+    const filterValue = filter.toLowerCase();
+  
+    return (
+      itemName.includes(filterValue) ||
+      brand.includes(filterValue) ||
+      category.includes(filterValue)
+    );
+  });
 
-  function test() {
-    console.log(user)
-  }
 
   return (
     <div>
-
-      <button id="createOrderbutton" onClick={() => test()}>
-      {"TEST"}
-       </button>
 
       <Header />
       <main>
@@ -69,11 +74,12 @@ function App() {
               order={order}
               user ={user}
               setUser ={setUser}
-              items={items}
+              items={filteredItems}
               setItems={setItems}
               itemStock = {itemStock}
               setItemStock= {setItemStock}
-              
+              filter = {filter}
+              setFilter= {setFilter}
             />
           </Route>
 
