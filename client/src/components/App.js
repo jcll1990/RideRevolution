@@ -63,15 +63,6 @@ function App() {
         <Switch>
 
         <Route exact path="/">
-            <Login
-            order = {order}
-            setUser={setUser}
-            user = {user}
-            setOrder = {setOrder}
-            />
-          </Route>
-
-          <Route exact path="/home">
             <Home 
               order={order}
               user ={user}
@@ -82,6 +73,15 @@ function App() {
               setItemStock= {setItemStock}
               filter = {filter}
               setFilter= {setFilter}
+            />
+          </Route>
+
+        <Route exact path="/login">
+            <Login
+            order = {order}
+            setUser={setUser}
+            user = {user}
+            setOrder = {setOrder}
             />
           </Route>
 

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 //add verification of email for signup
 
@@ -7,10 +8,7 @@ function Login({setUser, user, setOrder,order}) {
   const [loginPass, setLoginPass] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPass, setNewPass] = useState("");
-
-  const [authenticated, setAuthenticated] = useState(/* Initial authentication status */);
-
-
+  const history = useHistory();
   const handleLogin = (e) => {
     e.preventDefault();
     const data = {
@@ -41,6 +39,7 @@ function Login({setUser, user, setOrder,order}) {
         setUser(data.user);
         getOrder(data.user.id);
         alert(data.message); 
+        history.push("/");
         
       })
       .catch(error => {

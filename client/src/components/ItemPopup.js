@@ -75,6 +75,8 @@ const ItemPopup = ({ item, onClose, user, setUser, items, setItems, order, filte
           &times;
         </span>
         <h2>{item.name}</h2>
+        <p>{item.category}</p>
+
         <img src={item.image} alt="Product Image" />
         <p>{item.brand}</p>
         <p>${item.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
