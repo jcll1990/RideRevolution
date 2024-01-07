@@ -8,6 +8,9 @@ function Login({setUser, user, setOrder,order}) {
   const [newEmail, setNewEmail] = useState("");
   const [newPass, setNewPass] = useState("");
 
+  const [authenticated, setAuthenticated] = useState(/* Initial authentication status */);
+
+
   const handleLogin = (e) => {
     e.preventDefault();
     const data = {
@@ -37,10 +40,11 @@ function Login({setUser, user, setOrder,order}) {
       .then(data => {
         setUser(data.user);
         getOrder(data.user.id);
-        alert(data.message); // Display success message
+        alert(data.message); 
+        
       })
       .catch(error => {
-        alert(error.message); // Display error message
+        alert(error.message); 
         console.error(error.message);
       });
   };
@@ -63,8 +67,6 @@ function Login({setUser, user, setOrder,order}) {
         console.log("ERROR: Unable to fetch order data");
       });
   }
-  
-  
   
 
   const handleSignup = (e) => {
@@ -111,11 +113,33 @@ function Login({setUser, user, setOrder,order}) {
     });
   };
   
-  
-  
-  
+  function logoff(userId) {
+    fetch('http://127.0.0.1:5555/logout', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_id: userId }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+        setUser({});
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
   return (
+    <div>
+    {user.id >= 1? ( <>
+    
+    <h1>Logged with: {user.email}</h1>
+    <button onClick={() => logoff(user.id)}>Log off</button>
+     
+    </> ):
+
     <div className="login">
       <h5 className="create-account">LOGIN</h5>
     <form onSubmit={handleLogin} className="login-form">
@@ -167,8 +191,12 @@ function Login({setUser, user, setOrder,order}) {
     </form>
   
     <br />
-  </div>
+    </div>
+   
+    }
+    </div>
+
   )
-  }
+}
 
 export default Login;

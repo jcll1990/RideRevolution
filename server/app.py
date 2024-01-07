@@ -40,7 +40,7 @@ db.init_app(app)
 migrate = Migrate()
 migrate.init_app(app, db)
 
-excluded_endpoints = ['login', 'signup', 'check_session', 'root', 'items'] ### any other routes that does not need to be logged in
+excluded_endpoints = ['login', 'logout', 'signup', 'check_session', 'root', 'items']
 
 
 
@@ -79,23 +79,19 @@ def signup():
 def login():
     data = request.get_json()
 
-    # check if user exists
     user = User.query.filter(User.email == data['email']).first()
 
     if not user:
         return jsonify({'error': 'User not found.'}), 404
     
     if user.authenticate(data['password']):
-        # passwords matched, add cookie
         session['user_id'] = user.id
         user_data = {
             'id': user.id,
             'email': user.email,
-            # Add other user details as needed
         }
         return jsonify({'message': 'Login successful!', 'user': user_data}), 200
     else:
-        # password did not match, send error resp
         return jsonify({'error': 'Invalid password.'}), 401
     
 
@@ -117,10 +113,6 @@ def get_last_order():
 
 
 
-
-
-
-
 @app.route('/check_session')
 def check_session():
     user_id = session.get('user_id')
@@ -131,10 +123,9 @@ def check_session():
     
     return {'message': 'Session Valid, Access Granted'}, 200
 
-@app.delete('/logout')
+@app.route('/logout', methods=['DELETE'])
 def logout():
-    session.pop('user_id')
-
+    session.pop('user_id', None)
     return {'message': 'Successfully logged out.'}, 200
 
 

@@ -15,7 +15,7 @@ import Orders from "./Orders.js";
 
 function App() {
 
-  const [user, setUser] = useState  ({});
+  const [user, setUser] = useState({});
 
   const [items, setItems] = useState([]);
   const [filter, setFilter] = useState('');

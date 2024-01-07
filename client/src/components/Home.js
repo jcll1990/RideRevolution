@@ -11,8 +11,10 @@ function Home({ user, setUser, items, setItems, order,filter, setFilter }) {
     setFilter(event.target.value)
   }
 
-
-
+  
+  function handleFilterChangeCAT(a) {
+    setFilter(a)
+  }
   function addToCart(event, item) {
     event.preventDefault();
   
@@ -84,6 +86,17 @@ function Home({ user, setUser, items, setItems, order,filter, setFilter }) {
         placeholder="Filter items by name..."
         onChange={handleFilterChange}
       />
+
+<div>
+  <button onClick={() => handleFilterChangeCAT('Engine Parts')}>Engine Parts</button>
+  <button onClick={() => handleFilterChangeCAT('Air & Fuel')}>Air & Fuel</button>
+  <button onClick={() => handleFilterChangeCAT('Brakes')}>Brakes</button>
+  <button onClick={() => handleFilterChangeCAT('Exhaust Systems')}>Exhaust Systems</button>
+  <button onClick={() => handleFilterChangeCAT('')}>Clear filter</button>
+</div>
+
+
+
       </div>
       <h2>Items list!</h2>
       <div id="itemList">
