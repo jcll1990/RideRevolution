@@ -42,12 +42,14 @@ function App() {
     const itemName = item.name.toLowerCase();
     const brand = item.brand.toLowerCase();
     const category = item.category.toLowerCase();
+    const type = item.type.toLowerCase();
     const filterValue = filter.toLowerCase();
   
     return (
       itemName.includes(filterValue) ||
       brand.includes(filterValue) ||
-      category.includes(filterValue)
+      category.includes(filterValue) ||
+      type.includes(filterValue)
     );
   });
 

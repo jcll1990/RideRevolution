@@ -7,3 +7,10 @@ filter items by name, category (buttons)
 AI images for parts
 AI background
 
+Blaze Armor
+Swift Gear
+Apex Cruise
+
+Zenith Helm
+Turbo Shield
+Sky Defender

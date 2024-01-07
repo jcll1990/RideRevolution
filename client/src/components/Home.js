@@ -1,28 +1,39 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ItemPopup from "./ItemPopup.js"; // Adjust the path based on your project structure
 
-function Home({ user, setUser, items, setItems, order,filter, setFilter }) {
+function Home({ user, setUser, items, setItems, order, filter, setFilter }) {
+
+  const [popupItem, setPopupItem] = useState(null);
+
+  const handleImageClick = (item) => {
+    setPopupItem(item);
+  };
+
+  const closePopup = () => {
+    setPopupItem(null);
+  };
+
 
   useEffect(() => {
-    setFilter('')
-}, []);
+    setFilter('');
+  }, []);
 
   function handleFilterChange(event) {
-    setFilter(event.target.value)
+    setFilter(event.target.value);
   }
 
-  
   function handleFilterChangeCAT(a) {
-    setFilter(a)
+    setFilter(a);
   }
+
   function addToCart(event, item) {
     event.preventDefault();
-  
+
     const quantity = parseInt(event.target.quantity.value, 10);
     const newStock = item.stock - quantity;
-  
+
     if (newStock >= 0 && user.id >= 1) {
-      // Update the stock on the server
       fetch(`http://127.0.0.1:5555/items/${item.id}`, {
         method: "PATCH",
         headers: {
@@ -31,17 +42,15 @@ function Home({ user, setUser, items, setItems, order,filter, setFilter }) {
         body: JSON.stringify({ new_stock: newStock }),
       })
         .then((response) => {
-          // Fetch the updated items from the server
           fetch("http://127.0.0.1:5555/items")
             .then((r) => r.json())
             .then((data) => setItems(data))
             .catch((error) => {
               console.error("Error fetching updated items:", error);
             });
-  
+
           console.log("Items updated");
-  
-          // Add the item to the cart
+
           fetch("http://127.0.0.1:5555/add_to_cart", {
             method: "POST",
             headers: {
@@ -56,6 +65,7 @@ function Home({ user, setUser, items, setItems, order,filter, setFilter }) {
             .then((cartResponse) => {
               if (cartResponse.ok) {
                 console.log("Item added to the cart successfully");
+                closePopup();
               } else {
                 console.log("Failed to add item to the cart");
               }
@@ -72,37 +82,58 @@ function Home({ user, setUser, items, setItems, order,filter, setFilter }) {
     } else {
       alert("You need to log in");
     }
-  
+
     event.target.reset();
   }
-  
-  
 
   return (
     <div>
       <div>
         <input
-        type="text"
-        placeholder="Filter items by name..."
-        onChange={handleFilterChange}
-      />
+          type="text"
+          placeholder="Filter items by name..."
+          onChange={handleFilterChange}
+        />
 
-<div>
-  <button onClick={() => handleFilterChangeCAT('Engine Parts')}>Engine Parts</button>
-  <button onClick={() => handleFilterChangeCAT('Air & Fuel')}>Air & Fuel</button>
-  <button onClick={() => handleFilterChangeCAT('Brakes')}>Brakes</button>
-  <button onClick={() => handleFilterChangeCAT('Exhaust Systems')}>Exhaust Systems</button>
-  <button onClick={() => handleFilterChangeCAT('')}>Clear filter</button>
-</div>
+        <div>
+          <h2>Filter by type</h2>
+          <button onClick={() => handleFilterChangeCAT('Motorcycle upgrades')}>
+            Motorcycle upgrades
+          </button>
+          <button onClick={() => handleFilterChangeCAT('Motorcycle gear')}>
+            Motorcycle gear
+          </button>
 
+          <h2>Filter by category</h2>
+          <button onClick={() => handleFilterChangeCAT('Motorcycle engines')}>
+            Engine upgrades
+          </button>
+          <button onClick={() => handleFilterChangeCAT('Motorcycle brakes')}>
+            Brakes upgrades
+          </button>
+          <button onClick={() => handleFilterChangeCAT('Motorcycle exhausts')}>
+            Exhaust upgrades
+          </button>
 
+          <button onClick={() => handleFilterChangeCAT('Helmets')}>Helmets</button>
+          <button onClick={() => handleFilterChangeCAT('Jackets')}>Jackets</button>
+          <button onClick={() => handleFilterChangeCAT('Boots')}>Boots</button>
+          <button onClick={() => handleFilterChangeCAT('Gloves')}>Gloves</button>
 
+          <button onClick={() => handleFilterChangeCAT('')}>Clear filter</button>
+        </div>
       </div>
-      <h2>Items list!</h2>
+
+      <h3>Items list!</h3>
       <div id="itemList">
         {items.map((item, index) => (
           <ul key={index}>
-            <li><img src={item.image_url} alt="Product Image" /></li>
+            <img
+              src={item.image}
+              alt="Product Image"
+              onClick={() => handleImageClick(item)}
+            />
+
             <li>{item.name}</li>
             <li>Brand: {item.brand}</li>
             <li>Category: {item.category}</li>
@@ -118,7 +149,7 @@ function Home({ user, setUser, items, setItems, order,filter, setFilter }) {
                     </option>
                   ))}
                 </select>
-                
+
                 <input type="submit" value="Add to the cart" />
               </form>
             ) : (
@@ -130,8 +161,22 @@ function Home({ user, setUser, items, setItems, order,filter, setFilter }) {
           </ul>
         ))}
       </div>
+
+      {popupItem && (
+        <ItemPopup
+          item={popupItem}
+          onClose={closePopup}
+          user={user}
+          setUser={setUser}
+          items={items}
+          setItems={setItems}
+          order={order}
+          filter={filter}
+          setFilter={setFilter}
+        />
+      )}
     </div>
   );
-  
-                }
+}
+
 export default Home;

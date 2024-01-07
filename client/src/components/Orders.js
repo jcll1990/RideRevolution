@@ -91,7 +91,7 @@ function Order({ user,items }) {
   
                     {item && (
                       <div>
-                        <li><img src={item.image_url} alt="Product Image" /></li>
+                        <li><img src={item.image} alt="Product Image" /></li>
                         <li>Item Name: {item.name}</li>
                         <li>Item Brand: {item.brand}</li>
                         <li>Item Price: {item.price}</li>

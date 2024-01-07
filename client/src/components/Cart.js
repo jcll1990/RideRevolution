@@ -116,7 +116,7 @@ function Cart({ user, items, cart, setCart, setOrder, order }) {
             <h2>Items in the cart list</h2>
             {cart.map((cartItem, index) => (
               <div key={index} className="cart-item">
-                <img src={cartItem.item.image_url} alt="Product Image" />
+                <img src={cartItem.item.image} alt="Product Image" />
                 <div className="item-details">
                   <h3>{cartItem.item.name}</h3>
                   <p>{cartItem.item.brand}</p>
