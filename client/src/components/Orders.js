@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-function Order({ user,items }) {
-
-
+function Order({ user,items,setUser }) {
   const [selOrder, setSelOrder] = useState({});
-
   const [orders, setOrders] =useState([])
   const [itemsInOrder, setItemsInOrder] = useState([])
- 
+  const history = useHistory();
   let tempArray = [];
 
 
@@ -49,25 +46,51 @@ function Order({ user,items }) {
   }
 
 
+  function logoff(userId) {
+    fetch('http://127.0.0.1:5555/logout', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_id: userId }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+        setUser({});
+        alert("Logged off"); 
+        history.push("/MotorcycleUpgrades");
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+  }
+
+
   return (
     <div>
-  
-      <div id="OrderList">
-        {orders.length > 0 ? (
-          orders.map((order) => (
+    <h1>Logged with: {user.email}</h1>
+    <button onClick={() => logoff(user.id)}>Log off</button>
+
+
+    <div id="OrderList">
+      {orders.length > 0 ? (
+        <>
+          <p>Orders list:</p>
+          {orders.map((order) => (
             <ul key={order.id} onClick={() => handleOrderClick(order)}>
               <li>Order ID: {order.id}</li>
               <li>Date Created: {order.created_date}</li>
               <li>Number of items: {order.n_items}</li>
               <li>Order price: $ {order.cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</li>
-
-
             </ul>
-          ))
-        ) : (
-          <p>Nothing to show yet</p>
-        )}
-      </div>
+          ))}
+        </>
+      ) : (
+        <p>No orders yet</p>
+      )}
+    </div>
+
   
       <div id="SelectedOrder">
         {selOrder && selOrder.cost > 0 ? (
@@ -103,7 +126,7 @@ function Order({ user,items }) {
             })}
           </div>
         ) : (
-          <p>Nothing to show yet</p>
+          <></>
         )}
       </div>
     </div>

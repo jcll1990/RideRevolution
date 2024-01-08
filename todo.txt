@@ -1,16 +1,4 @@
-ADD:
-
-Home:
-filter items by name, category (buttons)
+Cart
+profile (for login)
 
 
-AI images for parts
-AI background
-
-Blaze Armor
-Swift Gear
-Apex Cruise
-
-Zenith Helm
-Turbo Shield
-Sky Defender

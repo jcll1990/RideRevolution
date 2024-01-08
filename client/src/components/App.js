@@ -2,15 +2,13 @@ import { Switch, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import Header from "./Header";
-import Home from "./Home.js";
+import MotorcycleUpgrades from "./MotorcycleUpgrades.js";
+import RidingGear from "./RidingGear.js";
 import Login from "./Login.js";
 import Cart from "./Cart.js";
 import About from "./About.js";
 import Orders from "./Orders.js";
-
-
-//Solo puedo agregar la mitad del stock????
-//bloquear todo hasta que se borre el carro?
+import Footer from "./Footer.js";
 
 
 function App() {
@@ -42,14 +40,12 @@ function App() {
     const itemName = item.name.toLowerCase();
     const brand = item.brand.toLowerCase();
     const category = item.category.toLowerCase();
-    const type = item.type.toLowerCase();
     const filterValue = filter.toLowerCase();
   
     return (
       itemName.includes(filterValue) ||
       brand.includes(filterValue) ||
-      category.includes(filterValue) ||
-      type.includes(filterValue)
+      category.includes(filterValue) 
     );
   });
 
@@ -57,13 +53,15 @@ function App() {
   return (
     <div>
 
-      <Header />
+      <Header 
+      user ={user}
+      />
       <main>
 
         <Switch>
 
-        <Route exact path="/">
-            <Home 
+        <Route exact path="/MotorcycleUpgrades">
+            <MotorcycleUpgrades 
               order={order}
               user ={user}
               setUser ={setUser}
@@ -75,6 +73,21 @@ function App() {
               setFilter= {setFilter}
             />
           </Route>
+
+          <Route exact path="/RidingGear">
+            <RidingGear 
+              order={order}
+              user ={user}
+              setUser ={setUser}
+              items={filteredItems}
+              setItems={setItems}
+              itemStock = {itemStock}
+              setItemStock= {setItemStock}
+              filter = {filter}
+              setFilter= {setFilter}
+            />
+          </Route>
+
 
         <Route exact path="/login">
             <Login
@@ -103,8 +116,7 @@ function App() {
             <Orders
               user={user}
               items={items}
-
-
+              setUser={setUser}
              />
           </Route>
 
@@ -114,6 +126,7 @@ function App() {
 
         </Switch>
       </main>
+      <Footer />
     </div>
   );
 }

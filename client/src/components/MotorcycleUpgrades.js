@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ItemPopup from "./ItemPopup.js"; // Adjust the path based on your project structure
 
-function Home({ user, setUser, items, setItems, order, filter, setFilter }) {
+function MotorcycleUpgrades({ user, setUser, items, setItems, order, filter, setFilter }) {
 
   const [popupItem, setPopupItem] = useState(null);
 
@@ -87,7 +87,7 @@ function Home({ user, setUser, items, setItems, order, filter, setFilter }) {
   }
 
   return (
-    <div>
+    <div id="store">
       <div>
         <input
           type="text"
@@ -96,13 +96,6 @@ function Home({ user, setUser, items, setItems, order, filter, setFilter }) {
         />
 
         <div>
-          <h2>Filter by type</h2>
-          <button onClick={() => handleFilterChangeCAT('Motorcycle upgrades')}>
-            Motorcycle upgrades
-          </button>
-          <button onClick={() => handleFilterChangeCAT('Motorcycle gear')}>
-            Motorcycle gear
-          </button>
 
           <h2>Filter by category</h2>
           <button onClick={() => handleFilterChangeCAT('Motorcycle engines')}>
@@ -115,10 +108,7 @@ function Home({ user, setUser, items, setItems, order, filter, setFilter }) {
             Exhaust upgrades
           </button>
 
-          <button onClick={() => handleFilterChangeCAT('Helmets')}>Helmets</button>
-          <button onClick={() => handleFilterChangeCAT('Jackets')}>Jackets</button>
-          <button onClick={() => handleFilterChangeCAT('Boots')}>Boots</button>
-          <button onClick={() => handleFilterChangeCAT('Gloves')}>Gloves</button>
+
 
           <button onClick={() => handleFilterChangeCAT('')}>Clear filter</button>
         </div>
@@ -126,7 +116,9 @@ function Home({ user, setUser, items, setItems, order, filter, setFilter }) {
 
       <h3>Items list!</h3>
       <div id="itemList">
-        {items.map((item, index) => (
+          {items
+          .filter((item) => item.type === "Motorcycle upgrades")
+          .map((item, index) => (
           <ul key={index}>
             <img
               src={item.image}
@@ -179,4 +171,4 @@ function Home({ user, setUser, items, setItems, order, filter, setFilter }) {
   );
 }
 
-export default Home;
+export default MotorcycleUpgrades;

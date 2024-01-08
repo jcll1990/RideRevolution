@@ -39,7 +39,7 @@ function Login({setUser, user, setOrder,order}) {
         setUser(data.user);
         getOrder(data.user.id);
         alert(data.message); 
-        history.push("/");
+        history.push("/MotorcycleUpgrades");
         
       })
       .catch(error => {
@@ -71,12 +71,12 @@ function Login({setUser, user, setOrder,order}) {
   const handleSignup = (e) => {
     e.preventDefault();
   
-    // //Password validation
-    // const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
-    // if (!passwordRegex.test(newPass)) {
-    //   alert("Password must contain at least 8 characters, 1 uppercase letter, and 1 special character.");
-    //   return;
-    // }
+    //Password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+    if (!passwordRegex.test(newPass)) {
+      alert("Password must contain at least 8 characters, 1 uppercase letter, and 1 special character.");
+      return;
+    }
   
     const data = {
       email: newEmail,
@@ -124,6 +124,7 @@ function Login({setUser, user, setOrder,order}) {
     .then(data => {
         console.log(data.message);
         setUser({});
+        alert("Logged off"); 
     })
     .catch(error => {
         console.error('Error:', error);
@@ -131,68 +132,72 @@ function Login({setUser, user, setOrder,order}) {
 }
 
   return (
-    <div>
-    {user.id >= 1? ( <>
-    
-    <h1>Logged with: {user.email}</h1>
-    <button onClick={() => logoff(user.id)}>Log off</button>
-     
-    </> ):
 
-    <div className="login">
-      <h5 className="create-account">LOGIN</h5>
-    <form onSubmit={handleLogin} className="login-form">
-      <label>Email:</label>
-      <br />
-      <input
-        type="email"
-        id="loginEmail"
-        value={loginEmail}
-        onChange={(e) => setLoginEmail(e.target.value)}
-      />
-      <br />
-      <label>Password:</label>
-      <br />
-      <input
-        type="password"
-        id="loginPass"
-        value={loginPass}
-        onChange={(e) => setLoginPass(e.target.value)}
-      />
-      <br />
-      <input className="loginput" type="submit" value="Login" />
-    </form>
-  
-    <br />
-  
-    <h5 className="create-account">CREATE NEW ACCOUNT</h5>
-    <br />
-    <form onSubmit={handleSignup} className="signup-form">
-      <label>Email:</label>
-      <br />
-      <input
-        type="email"
-        id="newEmail"
-        value={newEmail}
-        onChange={(e) => setNewEmail(e.target.value)}
-      />
-      <br />
-      <label>Password:</label>
-      <br />
-      <input
-        type="password"
-        id="newPass"
-        value={newPass}
-        onChange={(e) => setNewPass(e.target.value)}
-      />
-      <br />
-      <input className="loginput" type="submit" value="Create" />
-    </form>
-  
-    <br />
-    </div>
-   
-    }
+    <div id="logpage">
+      
+      {user.id >= 1? ( 
+      
+      <div>
+        <h1>Logged with: {user.email}</h1>
+        <button onClick={() => logoff(user.id)}>Log off</button>
+      </div>
+      ):
+
+      <div className="login">
+
+        <h5 className="create-account">LOGIN</h5>
+          <form onSubmit={handleLogin} className="login-form">
+            <label>Email:</label>
+            <br />
+            <input
+              type="email"
+              id="loginEmail"
+              value={loginEmail}
+              onChange={(e) => setLoginEmail(e.target.value)}
+            />
+            <br />
+            <label>Password:</label>
+            <br />
+            <input
+              type="password"
+              id="loginPass"
+              value={loginPass}
+              onChange={(e) => setLoginPass(e.target.value)}
+            />
+            <br />
+            <input className="loginput" type="submit" value="Login" />
+          </form>
+      
+        <br />
+    
+        <h5 className="create-account">CREATE NEW ACCOUNT</h5>
+
+        <br />
+          <form onSubmit={handleSignup} className="signup-form">
+            <label>Email:</label>
+            <br />
+            <input
+              type="email"
+              id="newEmail"
+              value={newEmail}
+              onChange={(e) => setNewEmail(e.target.value)}
+            />
+            <br />
+            <label>Password:</label>
+            <br />
+            <input
+              type="password"
+              id="newPass"
+              value={newPass}
+              onChange={(e) => setNewPass(e.target.value)}
+            />
+            <br />
+            <input className="loginput" type="submit" value="Create" />
+          </form>
+        <br />
+      </div>
+      }
+
     </div>
 
   )

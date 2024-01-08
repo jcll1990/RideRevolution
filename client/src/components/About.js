@@ -1,9 +1,4 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-
 function About() {
-
-
 
   return (
     <section id="about">

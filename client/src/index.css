@@ -1,9 +1,160 @@
-:root {
-  --bg: #282c34;
-  --header: #fff;
-  --link: #61dafb;
-  --text: hsla(0, 0%, 100%, 0.88);
+body {
+  margin: 0;
 }
+
+main{
+  margin-top: 110px;
+}
+
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 1px; 
+  text-align: center;
+  width: 99.8%;
+ 
+}
+
+.footer-text {
+  margin-bottom: 15px; 
+}
+
+.footer-address {
+  margin-bottom: 15px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-icons img {
+  width: 25px;
+  height: 25px;
+  margin: 0 10px; 
+}
+
+
+#header {
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+  #STORENAME {
+    font-size: 35px;
+    height: 60px; /* Adjust the height as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #navigation {
+    display: flex;
+    flex: 1;
+    height: 50px; /* Adjust the height as needed */
+  }
+
+    #sep,
+    #headButtons,
+    #headIcons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #sep {
+      flex: 0.1;
+      justify-content: space-around;
+    }
+
+    #headButtons {
+      flex: 0.8;
+      justify-content: center;
+      align-items: center;
+    }
+      #contheadButtons {
+        display: flex;
+        max-width:1000px;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        flex: 1;
+      }
+
+      .headnavbutton {
+        display: flex;
+        font-size: 20px;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #fff;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        background-color: black;
+        height: 38px;
+        width: 155px;
+        
+      }
+
+    #headIcons {
+      flex: 0.1;
+      justify-content: space-evenly; 
+    }
+      .button-icon-user {
+        background-image: url("../public/icons/user.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 24px; /* Adjust the width and height according to your icon size */
+        height: 24px;
+        display: inline-block;
+      }
+
+      .button-icon-cart {
+        background-image: url("../public/icons/cart.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 24px; /* Adjust the width and height according to your icon size */
+        height: 24px;
+        display: inline-block;
+      }
+
+
+  #logpage {
+    min-height: calc(100vh - 257px);
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url("../public/images/wallpapers/login.png");
+    background-position: center;
+    background-size: cover; 
+    background-repeat: no-repeat;
+  }
+      
+      
+.login {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+  color: white;
+  
+}
+
+#store {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url("../public/images/wallpapers/store.png");
+  background-position: center;
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+
+
 
  img {
   width: 100px;
@@ -40,248 +191,3 @@
   font-size: 20px;
   color: #333;
 }
-
-body {
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.35) 0 100%), url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwallpapercave.com%2Fbike-garage-wallpapers&psig=AOvVaw0BOx2FbvcoRVuR9A4UlarU&ust=1703010781801000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNizhNjPmYMDFQAAAAAdAAAAABAD");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  background-size: cover; /* Use cover to make the image cover the entire screen */
-  background-color: gray;
-}
-
-/* HOMEEEEEEEEEE*/
-
-
-
-
-#itemList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-ul {
-  list-style: none;
-  padding: 10px;
-  border: 1px solid #ccc;
-  width: 200px;
-  text-align: center;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-form {
-  margin-top: 10px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-select {
-  width: 100%;
-  padding: 5px;
-  margin-bottom: 10px;
-}
-
-input[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  background-color: black;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-input[type="submit"]:hover {
-  background-color: black;
-}
-
-/* HEADER*/
-#header {
-  background-color: #333;
-  color: #fff;
-  padding: 15px 0;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#STORENAME {
-  text-align: center;
-  margin: 0; /* Remove default margin for h1 */
-  flex-grow: 2;
-  font-size: 35px;
-}
-
-.navigation {
-  display: flex;
-  gap: 20px;
-}
-
-.button {
-  text-decoration: none;
-  color: #fff;
-  padding: 10px 15px;
-  border: 1px solid #fff;
-  border-radius: 5px;
-  background-color: black;
-}
-
-.button:hover {
-  background-color: #fff;
-  color: #333;
-}
-
-
-/* LOGIN */
-
-.auth-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.login-form,
-.signup-form {
-  text-align: center;
-  margin: 20px;
-}
-
-
-/*CART*/
-
-.item-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-}
-
-.cart-item {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: center;
-}
-
-.cart-item img {
-  max-width: 100%;
-  height: auto;
-}
-
-/*ORDER*/
-
-#OrderList,
-#SelectedOrder {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 20px;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 10px;
-}
-
-#SelectedOrder {
-  background-color: #f9f9f9;
-}
-
-#SelectedOrder h2 {
-  color: #333;
-}
-
-#mainOrder {
-  margin-bottom: 20px;
-}
-
-#mainOrder li {
-  font-weight: bold;
-}
-
-#SelectedOrder h3 {
-  margin-top: 20px;
-}
-
-#SelectedOrder img {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-
-.login-form {
-  font-size: 20px;
-  color: #333;
-  max-width: 400px;
-  margin: auto;
-  text-align: center;
-}
-
-h5{
-  text-align: center;
-
-}
-.signup-form {
-  font-size: 20px;
-  color: #333;
-  max-width: 400px;
-  margin: auto;
-  text-align: center;
-}
-
-
-label {
-  display: block;
-  margin-top: 10px;
-}
-
-
-input {
-  width: 100%;
-  padding: 8px;
-  margin: 5px 0;
-  box-sizing: border-box;
-}
-
-
-.loginput {
-  background-color: grey;
-  color: white;
-  padding: 10px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.loginput:hover {
-  background-color: black;
-}
-
-
-.create-account {
-  font-size: 18px;
-  color: #333;
-}
-
-
