@@ -8,7 +8,12 @@ function Login({setUser, user, setOrder,order}) {
   const [loginPass, setLoginPass] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPass, setNewPass] = useState("");
+  const [flagSig, setFlagSig] = useState(false)
+
+
+
   const history = useHistory();
+
   const handleLogin = (e) => {
     e.preventDefault();
     const data = {
@@ -48,6 +53,16 @@ function Login({setUser, user, setOrder,order}) {
       });
   };
   
+  const handleSignUpClick = () => {
+    setFlagSig(true);
+  };
+
+  const handleLogClick = () => {
+    setFlagSig(false);
+  };
+
+  
+
 
   function getOrder(a) {
     fetch(`http://127.0.0.1:5555/getorder?user_id=${a}`)
@@ -131,21 +146,18 @@ function Login({setUser, user, setOrder,order}) {
     });
 }
 
-  return (
-
-    <div id="logpage">
-      
-      {user.id >= 1? ( 
-      
-      <div>
-        <h1>Logged with: {user.email}</h1>
+return (
+  <div id="logpage">
+    {user.id >= 1 ? ( 
+      <div >
+        Logged in with: {user.email}
         <button onClick={() => logoff(user.id)}>Log off</button>
       </div>
-      ):
-
-      <div className="login">
-
-        <h5 className="create-account">LOGIN</h5>
+    ) : (
+      flagSig === false ? (
+   
+        <div id="loginbox">
+          <h5 className="create-account-text">LOGIN</h5>
           <form onSubmit={handleLogin} className="login-form">
             <label>Email:</label>
             <br />
@@ -165,14 +177,20 @@ function Login({setUser, user, setOrder,order}) {
               onChange={(e) => setLoginPass(e.target.value)}
             />
             <br />
-            <input className="loginput" type="submit" value="Login" />
+            <input id='formlogbuttom' type="submit" value="Login" />
           </form>
-      
-        <br />
-    
-        <h5 className="create-account">CREATE NEW ACCOUNT</h5>
-
-        <br />
+            <p>
+              Don't have an account with us?<br />
+              <span 
+                onClick={handleSignUpClick}               
+              >
+                Sign Up
+              </span>
+            </p>
+        </div>
+      ) : (
+        <div id="loginbox">
+          <h5 className="create-account">CREATE NEW ACCOUNT</h5>
           <form onSubmit={handleSignup} className="signup-form">
             <label>Email:</label>
             <br />
@@ -194,13 +212,21 @@ function Login({setUser, user, setOrder,order}) {
             <br />
             <input className="loginput" type="submit" value="Create" />
           </form>
-        <br />
-      </div>
-      }
+          <p>
+              Already have an account with us<br />
+              <span 
+                onClick={handleLogClick} 
+              >
+                Log In
+              </span>
+            </p>
+        </div>
+      )
+    )}
+  </div>
+);
 
-    </div>
 
-  )
 }
 
 export default Login;

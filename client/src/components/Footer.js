@@ -2,15 +2,21 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <div className="footer-content">
-        <p className="footer-text">&copy; 2024 Ride Revolution</p>
+    <footer id="footer">
+ 
+        <div id="footer-title">
+          &copy; 2024 Ride Revolution
+        </div>
 
-        <address className="footer-address">
+        <div id="footer-address">
           123 Street Avenue, New York, NY 10001
-        </address>
-        <p className="footer-text">Follow us on social media:</p>
-        <div className="social-icons">
+        </div>
+
+        <div id="footer-text">
+          Follow us on social media:
+        </div>
+
+        <div id="social-icons">
           <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
             <img src="icons/facebook.png" alt="Facebook Icon" />
           </a>
@@ -24,7 +30,7 @@ const Footer = () => {
             <img src="icons/youtube.png" alt="YouTube Icon" />
           </a>
         </div>
-      </div>
+
     </footer>
   );
 };

@@ -51,14 +51,25 @@ function App() {
 
 
   return (
-    <div>
-
+    <app id='app'>
       <Header 
       user ={user}
       />
       <main>
-
         <Switch>
+        <Route exact path="/">
+            <MotorcycleUpgrades 
+              order={order}
+              user ={user}
+              setUser ={setUser}
+              items={filteredItems}
+              setItems={setItems}
+              itemStock = {itemStock}
+              setItemStock= {setItemStock}
+              filter = {filter}
+              setFilter= {setFilter}
+            />
+          </Route>
 
         <Route exact path="/MotorcycleUpgrades">
             <MotorcycleUpgrades 
@@ -127,8 +138,8 @@ function App() {
         </Switch>
       </main>
       <Footer />
-    </div>
+    </app>
   );
 }
 
-export default App;
+export default App
