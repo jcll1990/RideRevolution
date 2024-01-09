@@ -51,11 +51,12 @@ function App() {
 
 
   return (
-    <app id='app'>
+    <app>
+      <div id='app'>
       <Header 
       user ={user}
       />
-      <main>
+      <main id='main'>
         <Switch>
         <Route exact path="/">
             <MotorcycleUpgrades 
@@ -138,7 +139,9 @@ function App() {
         </Switch>
       </main>
       <Footer />
+      </div>
     </app>
+    
   );
 }
 

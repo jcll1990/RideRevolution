@@ -148,6 +148,7 @@ function Login({setUser, user, setOrder,order}) {
 
 return (
   <div id="logpage">
+    <div id="logsep"></div>
     {user.id >= 1 ? ( 
       <div >
         Logged in with: {user.email}
@@ -155,9 +156,12 @@ return (
       </div>
     ) : (
       flagSig === false ? (
-   
-        <div id="loginbox">
-          <h5 className="create-account-text">LOGIN</h5>
+
+        <div id="logbox">
+
+          <div className="create-account-text">
+            LOGIN
+          </div>
           <form onSubmit={handleLogin} className="login-form">
             <label>Email:</label>
             <br />
@@ -179,15 +183,16 @@ return (
             <br />
             <input id='formlogbuttom' type="submit" value="Login" />
           </form>
-            <p>
-              Don't have an account with us?<br />
-              <span 
-                onClick={handleSignUpClick}               
-              >
-                Sign Up
-              </span>
-            </p>
+          <div>
+            Don't have an account with us?<br />
+            <span 
+              onClick={handleSignUpClick}               
+            >
+              Sign Up
+            </span>
+          </div>
         </div>
+
       ) : (
         <div id="loginbox">
           <h5 className="create-account">CREATE NEW ACCOUNT</h5>
