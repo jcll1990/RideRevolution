@@ -88,69 +88,85 @@ function MotorcycleUpgrades({ user, setUser, items, setItems, order, filter, set
 
   return (
     <div id="store">
-      <div>
-        <input
+      <div id="storesep1">
+      </div>
+      <div id="storemaintext">
+      Motorcycle Upgrades
+      </div>
+
+
+      <div id="filtercontainer">
+        <div id="storefilterinput">
+                <div id="storesep1">
+      </div>
+        <input id="filterinput"
           type="text"
-          placeholder="Filter items by name..."
+          placeholder="Find items here..."
           onChange={handleFilterChange}
         />
-
-        <div>
-
-          <h2>Filter by category</h2>
-          <button onClick={() => handleFilterChangeCAT('Motorcycle engines')}>
+        </div>
+        <div id="storesep1">
+      </div>
+        <div id="storefilterbuttoncontainer">
+          <button id="filterbutton" onClick={() => handleFilterChangeCAT('Motorcycle engines')}>
             Engine upgrades
           </button>
-          <button onClick={() => handleFilterChangeCAT('Motorcycle brakes')}>
+          <button id="filterbutton"  onClick={() => handleFilterChangeCAT('Motorcycle brakes')}>
             Brakes upgrades
           </button>
-          <button onClick={() => handleFilterChangeCAT('Motorcycle exhausts')}>
+          <button  id="filterbutton" onClick={() => handleFilterChangeCAT('Motorcycle exhausts')}>
             Exhaust upgrades
           </button>
-
-
-
-          <button onClick={() => handleFilterChangeCAT('')}>Clear filter</button>
+          <button  id="filterbutton" onClick={() => handleFilterChangeCAT('')}>Clear filter</button>
         </div>
       </div>
 
-      <h3>Items list!</h3>
-      <div id="itemList">
+      <div id="storesep">
+      </div>
+
+
+
+      <div id="itembox">
           {items
           .filter((item) => item.type === "Motorcycle upgrades")
           .map((item, index) => (
-          <ul key={index}>
-            <img
-              src={item.image}
-              alt="Product Image"
-              onClick={() => handleImageClick(item)}
-            />
 
-            <li>{item.name}</li>
-            <li>Brand: {item.brand}</li>
-            <li>Category: {item.category}</li>
-            <li>Price: ${item.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</li>
-            <li>Stock: {item.stock} units</li>
-            {item.stock > 0 ? (
-              <form onSubmit={(event) => addToCart(event, item)}>
-                <label htmlFor="quantity">Quantity:</label>
-                <select name="quantity" id="quantity" defaultValue="1" max={Math.floor(item.stock / 2)}>
-                  {[...Array(Math.floor(item.stock)).keys()].map((num) => (
-                    <option key={num + 1} value={num + 1}>
-                      {num + 1}
-                    </option>
-                  ))}
-                </select>
+          <div id="itemstoshow" key={index}>
+            <div id="itemname">{item.name}</div>
+            <div id="itemimgcont">
+              <img id="itemimg"
+                src={item.image}
+                alt="Product Image"
+                onClick={() => handleImageClick(item)}
+              />
+            </div>
+            <div id="itemdetail">{item.brand}</div>
+            <div id="itemdetail">{item.category}</div>
+            <div id="itemdetail">${item.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
+         
+              {item.stock > 0 ? (
+                <div id="itemstock">
+                  <div id="itemstocktext">Stock: {item.stock} units</div>
+                  <form id="addtocartstoreform" onSubmit={(event) => addToCart(event, item)}>
+                    
+                    <select name="quantity" id="quantitystore" defaultValue="1" max={Math.floor(item.stock / 2)}>
+                      {[...Array(Math.floor(item.stock)).keys()].map((num) => (
+                        <option key={num + 1} value={num + 1}>
+                          {num + 1}
+                        </option>
+                      ))}
+                    </select>
 
-                <input type="submit" value="Add to the cart" />
-              </form>
-            ) : (
-              <div>
-                <h2>Out of Stock</h2>
-                <h4>More stock coming soon</h4>
-              </div>
-            )}
-          </ul>
+                    <input id="addcartstoreinput" type="submit" value="Add to the cart" />
+                  </form>
+                </div>
+                ) : (
+                  <div id="outofstock">
+                    Out of Stock <br/>
+                    More stock coming soon
+                  </div>
+                )}
+          </div>
         ))}
       </div>
 
@@ -167,7 +183,11 @@ function MotorcycleUpgrades({ user, setUser, items, setItems, order, filter, set
           setFilter={setFilter}
         />
       )}
+      
+      <div id="storesep">
+      </div>
     </div>
+    
   );
 }
 

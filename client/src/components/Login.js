@@ -148,11 +148,18 @@ function Login({setUser, user, setOrder,order}) {
 
 return (
   <div id="logpage">
+
     <div id="logsep"></div>
+
     {user.id >= 1 ? ( 
-      <div >
-        Logged in with: {user.email}
-        <button onClick={() => logoff(user.id)}>Log off</button>
+
+      <div id="LoggedBox">
+        <div id="LoggedBoxText">
+        Logged in with:  <br /> {user.email}
+        </div>
+        <div id="LoggedBoxButtonbox">
+        <button id="LoggedBoxButton" onClick={() => logoff(user.id)}>Log off</button>
+        </div>
       </div>
     ) : (
       flagSig === false ? (
@@ -160,10 +167,10 @@ return (
         <div id="logbox">
 
           <div className="create-account-text">
-            LOGIN
+            Login
           </div>
           <form onSubmit={handleLogin} className="login-form">
-            <label>Email:</label>
+            <label><br />Email:</label>
             <br />
             <input
               type="email"
@@ -184,9 +191,10 @@ return (
             <input id='formlogbuttom' type="submit" value="Login" />
           </form>
           <div>
+          <br />
             Don't have an account with us?<br />
-            <span 
-              onClick={handleSignUpClick}               
+            <span
+              onClick={handleSignUpClick} style={{ cursor: 'pointer' }}
             >
               Sign Up
             </span>
@@ -194,10 +202,14 @@ return (
         </div>
 
       ) : (
-        <div id="loginbox">
-          <h5 className="create-account">CREATE NEW ACCOUNT</h5>
-          <form onSubmit={handleSignup} className="signup-form">
-            <label>Email:</label>
+        <div id="logbox">
+
+          <div className="create-account-text">
+            Create an account
+          </div>
+
+          <form onSubmit={handleSignup} className="login-form">
+            <label><br />Email:</label>
             <br />
             <input
               type="email"
@@ -215,9 +227,9 @@ return (
               onChange={(e) => setNewPass(e.target.value)}
             />
             <br />
-            <input className="loginput" type="submit" value="Create" />
+            <input  id='formlogbuttom'  type="submit" value="Create" />
           </form>
-          <p>
+          <p><br />
               Already have an account with us<br />
               <span 
                 onClick={handleLogClick} 

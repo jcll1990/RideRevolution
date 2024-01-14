@@ -3,9 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-
-
 #header {
   background-color: rgba(0, 0, 0, 0.6);
   border-bottom: 2px solid #fff;
@@ -81,8 +78,6 @@
       height: 24px;
       display: inline-block;
       }
-
-
 #footer {
   background-color: rgba(0, 0, 0, 0.6);
   border-top: 2px solid #fff;
@@ -122,13 +117,11 @@
     height: 25px;
     margin-left: 10px;
     margin-right: 10px;
-    }
-       
+    } 
 #main {
   min-height: calc(100vh - 264px);
   
 }
-
 #app {
   background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url("../public/images/wallpapers/option4.png");
   background-position: center;
@@ -136,20 +129,15 @@
   background-repeat: no-repeat;
   background-attachment: fixed; 
 }
-
-
-
 #logpage {
 display: flex;
 flex-direction: column;
 justify-content: center; 
 align-items: center;
 }
-
 #logsep {
   height: 75px;
 }
-
 #logbox {
 display: flex;
 flex-direction: column;
@@ -163,39 +151,339 @@ box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 width:320px;
 height: 370px;
 }
-
 .create-account-text{
-font-size: 25px;
-}
+font-size: 27px;
 
-.login-form{
-display: flex;
-flex-direction: column;
-justify-content: center;
 }
-
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .login-form input{
-width:200px;
+width:210px;
+height: 28px;
+box-shadow: 0 0 10px rgba(255, 255, 255, 0.5)
 }
 #formlogbuttom{
-width: 210px;
+  display: flex;
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 8px;
+  background-color: black;
+  height: 28px;
+  width: 155px;
+  border: 1px solid #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5)
 }
-
-#loginbox p {
-padding-bottom: 20px;
+#LoggedBox{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6); 
+  border-radius: 15px;
+  border: 2px solid #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  width:320px;
+  height: 170px;
 }
-
-
-
-
-
-
-
-
-
-
-
-img {
-  width: 100px;
-  height: 100px;
+#LoggedBoxText {
+  font-size: 20px;
+  display: flex;
+  flex: 0.5;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
+#LoggedBoxButtonbox{
+  font-size: 20px;
+  flex :0.5;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+#LoggedBoxButton{
+  display: flex;
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 8px;
+  background-color: black;
+  height: 28px;
+  width: 155px;
+  border: 1px solid #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5)
+}
+#storesep1{
+  height: 25px;
+}
+#storesep{
+  height: 50px;
+}
+#filterinput{
+box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+margin-left: 60px;
+height: 25px;
+width: 200px;
+}
+#storemaintext{
+  color:white;
+  font-weight: bold;
+  font-size: 30px;
+  height: 45px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+#storefilterbuttoncontainer{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+#filterbutton{
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 8px;
+  background-color: black;
+  height: 25px;
+  width: 130px;
+  border: 1px solid #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  margin-left: 10px;
+  margin-right: 10px;
+
+}
+#itembox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; 
+  justify-content: center;
+  align-items: center;
+}
+#itemstoshow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 15px;
+  border: 2px solid #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  width: 320px;
+  height: 370px;
+}
+#itemname{
+  flex:.17;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#itemimgcont{
+  flex:.40;
+}
+#itemimg{
+  width: 145px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  border: .5px solid #fff;
+
+}
+#itemdetail{
+  flex: 0.08;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#itemstock{
+  flex: 0.19;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+#itemstocktext{
+  flex: 0.3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#addtocartstoreform {
+  display: flex;
+  flex: 0.7;
+  justify-content: space-between; 
+  align-items: center;
+}
+#quantitystore{
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 7px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  border: .5px solid #fff;
+
+}
+#addcartstoreinput{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 7px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  border: .5px solid #fff;
+  width: 110px;
+  margin-left: 10px;
+}
+#outofstock{
+  flex: 0.19;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  
+}
+.popup-content {
+  background: black;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 500px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  border: .5px solid #fff;
+}
+#popupimg{
+  width: 450px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+#addtocartstoreformpop {
+  display: flex;
+  flex: 0.7;
+  justify-content: space-evenly; 
+  align-items: center;
+}
+#quantitystorepop{
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 7px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  border: .5px solid #fff;
+  height: 25px;
+
+}
+#addcartstoreinputpop{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 7px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  border: .5px solid #fff;
+  width: 110px;
+  height: 25px;
+  margin-left: 10px;
+}
+#close-button{
+display: flex;
+font-size: 16px;
+align-items: center;
+justify-content: center;
+text-decoration: none;
+color: #fff;
+border-radius: 8px;
+background-color: black;
+height: 28px;
+width: 450px;
+border: 1px solid #fff;
+box-shadow: 0 0 10px rgba(255, 255, 255, 0.5)
+}
+#about-page{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  
+}
+#about-text-container{
+  font-size: 28px;
+  color: white;
+  width: 80%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 2px solid #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  border-radius: 10px ;
+  justify-content: center; 
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+}
+#about-text{
+
+  width: 85%;
+
+}
+#contact-us-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6); 
+  border-radius: 15px;
+  border: 2px solid #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  width:420px;
+  height: 500px;
+  }
+
+  #contact-email{
+    width:210px;
+    height: 28px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+   
+  }
+
+  #newmessage{
+    width:350px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    height: 200px;
+  }

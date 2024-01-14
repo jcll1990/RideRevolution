@@ -70,42 +70,38 @@ const ItemPopup = ({ item, onClose, user, setUser, items, setItems, order, filte
   }
   return (
     <div className="popup-overlay">
+
       <div className="popup-content">
-        <span className="close" onClick={onClose}>
-          &times;
-        </span>
+
         <h2>{item.name}</h2>
         <p>{item.category}</p>
-
-        <img src={item.image} alt="Product Image" />
+        <br/>
+        <img id="popupimg" src={item.image} alt="Product Image" />
+        <br/><br/>
         <p>{item.brand}</p>
+        <br/>
         <p>${item.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
-        <p>{item.description} units</p>
-        {item.stock > 0 ? (
-          <form onSubmit={(event) => addToCart(event, item)}>
-            <label htmlFor="quantity">Quantity:</label>
-            <select
-              name="quantity"
-              id="quantity"
-              defaultValue="1"
-              max={Math.floor(item.stock / 2)}
-            >
-              {[...Array(Math.floor(item.stock)).keys()].map((num) => (
-                <option key={num + 1} value={num + 1}>
-                  {num + 1}
-                </option>
-              ))}
+        <br/><p>{item.description}</p>
+        <br/>{item.stock > 0 ? (
+          <form id="addtocartstoreformpop" onSubmit={(event) => addToCart(event, item)}>
+            
+            <select name="quantity" id="quantitystorepop" defaultValue="1" max={Math.floor(item.stock / 2)}>
+                      {[...Array(Math.floor(item.stock)).keys()].map((num) => (
+                        <option key={num + 1} value={num + 1}>
+                          {num + 1}
+                        </option>
+                      ))}
             </select>
   
-            <input type="submit" value="Add to the cart" />
+            <input id="addcartstoreinputpop" type="submit" value="Add to the cart" />
           </form>
         ) : (
-          <div>
-            <h2>Out of Stock</h2>
-            <h4>More stock coming soon</h4>
+          <div id="outofstock">
+            Out of Stock <br/>
+            More stock coming soon
           </div>
         )}
-        <button className="close-button" onClick={onClose}>
+       <br/> <button id="close-button" onClick={onClose}>
           Close
         </button>
       </div>
