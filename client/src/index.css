@@ -30,6 +30,7 @@ align-items: center;
 display: flex;
 justify-content: center;
 align-items: center;
+cursor: pointer;
 }
 #contheadButtons {
 display: flex;
@@ -58,8 +59,7 @@ box-shadow: 0 0 10px rgba(255, 255, 255, 0.5)
 flex: 0.1;
 justify-content: space-around; 
 display: flex;
-justify-content: center;
-align-items: center;
+
 
 }
 .button-icon-user {
@@ -249,6 +249,7 @@ width: 200px;
   display: flex;
 }
 #filterbutton{
+  cursor: pointer;
   display: flex;
   font-size: 14px;
   align-items: center;
@@ -297,6 +298,7 @@ width: 200px;
   flex:.40;
 }
 #itemimg{
+  cursor: pointer;
   width: 145px;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   border: .5px solid #fff;
@@ -342,6 +344,7 @@ width: 200px;
 
 }
 #addcartstoreinput{
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center; 
@@ -408,6 +411,7 @@ width: 200px;
 
 }
 #addcartstoreinputpop{
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center; 
@@ -422,6 +426,7 @@ width: 200px;
   margin-left: 10px;
 }
 #close-button{
+  cursor: pointer;
 display: flex;
 font-size: 16px;
 align-items: center;
@@ -485,4 +490,57 @@ box-shadow: 0 0 10px rgba(255, 255, 255, 0.5)
     width:350px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     height: 200px;
+}
+#emptyCart{
+    font-size: 32px;
+    color: white;
+    margin-left: 20px;
+}
+#createOrderbutton{
+  display: flex;
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #fff;
+  margin-left: 20px;
+  border-radius: 8px;
+  background-color: black;
+  height: 38px;
+  width: 155px;
+  border: 1px solid #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5)
+}
+#itemstoshowcart{
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 15px;
+  border: 2px solid #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  width: 320px;
+  height: 470px;
+}
+#itemimgcart{
+
+  width: 185px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  border: .5px solid #fff;
+  border-radius: 9px;
+}
+
+#removecartform{
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+}
+
+#Totalamount{
+  font-size: 32px;
+  color: white;
+  margin-left: 20px;
 }

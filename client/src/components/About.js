@@ -46,13 +46,14 @@ function About() {
             <label>Message:</label>
             <br />
             <input
-              type="text"
-              id="newmessage"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+                type="text"
+                id="newmessage"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+
             />
             <br />
-            <input  id='formlogbuttom'  type="submit" value="Send" />
+            <input  id='formlogbuttom'  type="submit" value="Send"                 style={{ cursor: 'pointer' }} />
           </form>
           
 

@@ -65,7 +65,7 @@ function RidingGear({ user, setUser, items, setItems, order, filter, setFilter }
             .then((cartResponse) => {
               if (cartResponse.ok) {
                 console.log("Item added to the cart successfully");
-                closePopup();
+                alert("Added to your cart");
               } else {
                 console.log("Failed to add item to the cart");
               }

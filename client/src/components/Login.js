@@ -86,12 +86,12 @@ function Login({setUser, user, setOrder,order}) {
   const handleSignup = (e) => {
     e.preventDefault();
   
-    //Password validation
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
-    if (!passwordRegex.test(newPass)) {
-      alert("Password must contain at least 8 characters, 1 uppercase letter, and 1 special character.");
-      return;
-    }
+    // //Password validation
+    // const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+    // if (!passwordRegex.test(newPass)) {
+    //   alert("Password must contain at least 8 characters, 1 uppercase letter, and 1 special character.");
+    //   return;
+    // }
   
     const data = {
       email: newEmail,

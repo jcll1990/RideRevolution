@@ -65,7 +65,7 @@ function MotorcycleUpgrades({ user, setUser, items, setItems, order, filter, set
             .then((cartResponse) => {
               if (cartResponse.ok) {
                 console.log("Item added to the cart successfully");
-                closePopup();
+                alert("Added to your cart");
               } else {
                 console.log("Failed to add item to the cart");
               }
@@ -108,7 +108,7 @@ function MotorcycleUpgrades({ user, setUser, items, setItems, order, filter, set
         <div id="storesep1">
       </div>
         <div id="storefilterbuttoncontainer">
-          <button id="filterbutton" onClick={() => handleFilterChangeCAT('Motorcycle engines')}>
+          <button id="filterbutton" onClick={() => handleFilterChangeCAT('Motorcycle engines')} >
             Engine upgrades
           </button>
           <button id="filterbutton"  onClick={() => handleFilterChangeCAT('Motorcycle brakes')}>
