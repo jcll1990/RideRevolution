@@ -59,7 +59,6 @@ function Order({ user,items,setUser }) {
         console.log(data.message);
         setUser({});
         alert("Logged off"); 
-        history.push("/MotorcycleUpgrades");
     })
     .catch(error => {
         console.error('Error:', error);
@@ -68,69 +67,98 @@ function Order({ user,items,setUser }) {
 
 
   return (
-    <div>
-    <h1>Logged with: {user.email}</h1>
-    <button onClick={() => logoff(user.id)}>Log off</button>
-
-
-    <div id="OrderList">
-      {orders.length > 0 ? (
-        <>
-          <p>Orders list:</p>
-          {orders.map((order) => (
-            <ul key={order.id} onClick={() => handleOrderClick(order)}>
-              <li>Order ID: {order.id}</li>
-              <li>Date Created: {order.created_date}</li>
-              <li>Number of items: {order.n_items}</li>
-              <li>Order price: $ {order.cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</li>
-            </ul>
-          ))}
-        </>
-      ) : (
-        <p>No orders yet</p>
-      )}
-    </div>
-
-  
-      <div id="SelectedOrder">
-        {selOrder && selOrder.cost > 0 ? (
+    
+     <div>
+        {user.id >= 1 ? (
           <div>
-            <h2>Selected order</h2>
-            <ul id="mainOrder">
-              <li>Order ID: {selOrder.id}</li>
-              <li>Date Created: {selOrder.created_date}</li>
-              <li>Number of items: {selOrder.n_items}</li>
-              <li>Order price: $ {selOrder.cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</li>
-            </ul>
-            <h3>Items in the order:</h3>
-            {itemsInOrder.map((itemID) => {
-              const item = items.find((item) => item.id === itemID);
-              const quantity = getQuantityForItem(itemID);
-              return (
-                <div key={itemID}>
-                  <ul>
-                    <li>Item ID: {itemID}</li>
-                    <li>Item Quantity: {quantity}</li>
-  
-                    {item && (
-                      <div>
-                        <li><img src={item.image} alt="Product Image" /></li>
-                        <li>Item Name: {item.name}</li>
-                        <li>Item Brand: {item.brand}</li>
-                        <li>Item Price: {item.price}</li>
-                      </div>
-                    )}
+            <div id="storesep1"></div>
+            <div id="LoggedBoxorders">
+              <div id="LoggedBoxText">
+              Logged in with: {user.email}
+              </div>
+          
+              <button id="LoggedBoxButton" onClick={() => logoff(user.id)}>Log off</button>
+        
+            </div>
+            <div id="storesep1"></div>
+
+            {orders.length > 0 ? (
+              <>
+              <div id="Ordertext">Your Orders:</div>
+              <div id="storesep1"></div>
+              <div id="orderscontainer">
+                
+                
+                {orders.map((order) => (
+                  <ul id="orderslist" key={order.id} onClick={() => handleOrderClick(order)}>
+                    <li>Order ID: {order.id}</li>
+                    <li>Date Created: {order.created_date}</li>
+                    <li>Number of items: {order.n_items}</li>
+                    <li>Order price: $ {order.cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</li>
                   </ul>
+                ))}
+              </div>
+              </>
+            ) : (
+              <></>
+            )}
+            <div id="storesep1"></div>
+            <div id="SelectedOrder">
+              {selOrder && selOrder.cost > 0 ? (
+                <div>
+
+                  <div id="Ordertext">Items in the order:</div>
+                  <div id="storesep1"></div>
+                  <div id="imtesinordercontainer">
+                  {itemsInOrder.map((itemID) => {
+                    const item = items.find((item) => item.id === itemID);
+                    const quantity = getQuantityForItem(itemID);
+                    
+                    return (
+                      <>
+                      
+                      <div id="itemstoshowOrder" key={itemID}>
+                       
+                      <br/>
+                          <div id="itemdetail">Item Quantity: {quantity}</div>
+                          <br/>
+                         
+                         
+                              <img src={item.image} alt="Product Image" id="itemimgord" />
+                              <br/>
+                              <div id="itemdetail">Item Name: {item.name}</div>
+                              <br/>
+                              <div id="itemdetail">Item Brand: {item.brand}</div>
+                              <br/>
+                              <div id="itemdetail">Item Price: ${item.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</div>
+                              <br/>
+                        
+                            
+                         
+                        
+                      </div>
+                      <div id="storesep1"></div>
+                      </>
+                    );
+                    
+                  })}
+                  </div>
+                  
                 </div>
-              );
-            })}
+                
+              ) : (
+                <></>
+              )}
+            </div>
+            
           </div>
         ) : (
-          <></>
+        <div id="emptyCart">
+         NOTHING TO SHOW
+        </div>
         )}
       </div>
-    </div>
-  );
-        }  
+    );
+}
 
 export default Order;

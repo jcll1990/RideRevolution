@@ -144,7 +144,7 @@ function Login({setUser, user, setOrder,order}) {
     .catch(error => {
         console.error('Error:', error);
     });
-}
+  }
 
 return (
   <div id="logpage">
