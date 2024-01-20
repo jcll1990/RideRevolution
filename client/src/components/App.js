@@ -23,12 +23,17 @@ function App() {
   const [order, setOrder] = useState(0)
   
   useEffect(() => {
-    fetch("/check_session").then((res) => {
-        if (res.ok) {
-            res.json().then((user) => setCurrentUser(user));
-        }
-    });
-  }, []);
+    fetch("/check_session")
+        .then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error('Server response not ok');
+            }
+        })
+        .then((user) => setCurrentUser(user))
+        .catch((error) => console.error('Error:', error));
+}, []);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/items")

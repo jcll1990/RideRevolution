@@ -14,7 +14,12 @@ function MotorcycleUpgrades({ user, setUser, items, setItems, order, filter, set
     setPopupItem(null);
   };
 
-
+  useEffect(() => {
+    fetch("http://127.0.0.1:5555/items")
+    .then((r) => r.json())
+    .then((data) => setItems(data));
+  }, []);
+  
   useEffect(() => {
     setFilter('');
   }, []);

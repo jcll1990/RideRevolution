@@ -13,7 +13,11 @@ function RidingGear({ user, setUser, items, setItems, order, filter, setFilter }
   const closePopup = () => {
     setPopupItem(null);
   };
-
+  useEffect(() => {
+    fetch("http://127.0.0.1:5555/items")
+    .then((r) => r.json())
+    .then((data) => setItems(data));
+  }, []);
 
   useEffect(() => {
     setFilter('');

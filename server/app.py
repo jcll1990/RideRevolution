@@ -119,14 +119,9 @@ def check_session():
     user = User.query.filter(User.id == user_id).first()
 
     if not user:
-        return {'error': 'Invalid Session.'}, 401
-    
-    return {'message': 'Session Valid, Access Granted'}, 200
+        return jsonify({'error': 'Invalid Session.'}), 401
 
-@app.route('/logout', methods=['DELETE'])
-def logout():
-    session.pop('user_id', None)
-    return {'message': 'Successfully logged out.'}, 200
+    return jsonify({'message': 'Session Valid, Access Granted'}), 200
 
 
 @app.route('/items', methods=['GET'])
